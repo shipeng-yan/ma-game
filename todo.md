@@ -24,4 +24,10 @@
 - [x] Write vitest tests for backend procedures (11 tests passing)
 - [x] Verify all features in browser
 - [x] Save checkpoint
-- [ ] Push to GitHub (ma-game repository)
+- [x] Push to GitHub (ma-game repository)
+
+## New Requests
+- [x] Add password gate screen (password: MSAF7008) before registration
+- [x] Add live ranking page shown at the end of the game (ranked by average of investor + ESG scores)
+- [x] Update backend: expose a public endpoint for rankings (no admin required)
+- [x] Make GitHub repository public

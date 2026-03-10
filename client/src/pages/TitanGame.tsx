@@ -5,9 +5,52 @@ import {
   CHAPTERS, CHAPTER_NAMES, CHAPTER_IMAGES, HERO_IMAGE, DATA, CONSEQUENCES,
   getArchetype, UNILEVER_ACTUAL, CHAPTER_REVEAL_NAMES, getScoreBarWidth, Chapter, Option
 } from "@/lib/gameData";
+import RankingPage from "./RankingPage";
+
+const GAME_PASSWORD = "MSAF7008";
+
+// ─── Password Gate ─────────────────────────────────────────────────────────────
+function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
+  const [input, setInput] = useState('');
+  const [error, setError] = useState(false);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (input.trim().toUpperCase() === GAME_PASSWORD) {
+      sessionStorage.setItem('titan_unlocked', '1');
+      onUnlock();
+    } else {
+      setError(true);
+      setInput('');
+      setTimeout(() => setError(false), 3000);
+    }
+  }
+
+  return (
+    <div className="password-gate">
+      <div className="password-gate-card">
+        <h2>The Titan Challenge</h2>
+        <p>This game is for enrolled students only. Please enter the class password to continue.</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            className="form-input"
+            type="password"
+            placeholder="Enter class password"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            autoFocus
+            required
+          />
+          {error && <div className="password-error">Incorrect password. Please try again.</div>}
+          <button type="submit" className="btn-primary btn-block" style={{ marginTop: '1rem' }}>Enter →</button>
+        </form>
+      </div>
+    </div>
+  );
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-type Screen = 'register' | 'title' | 'opening' | 'decision1' | 'decision2' | 'outcome' | 'gameover' | 'final';
+type Screen = 'password' | 'register' | 'title' | 'opening' | 'decision1' | 'decision2' | 'outcome' | 'gameover' | 'final' | 'ranking';
 type DecisionRecord = { chapter: string; chapterTitle: string; choiceLabel: string; choiceDesc: string; investorDelta: number; esgDelta: number };
 type ModalData = { title: string; consequence: string; invDelta: number; esgDelta: number; onContinue: () => void } | null;
 
@@ -79,7 +122,9 @@ function NavBar({ currentChapter, completedChapters, visible }: { currentChapter
 
 // ─── Main Game Component ───────────────────────────────────────────────────────
 export default function TitanGame() {
-  const [screen, setScreen] = useState<Screen>('register');
+  const [screen, setScreen] = useState<Screen>(
+    sessionStorage.getItem('titan_unlocked') === '1' ? 'register' : 'password'
+  );
   const [playerName, setPlayerName] = useState('');
   const [playerEmail, setPlayerEmail] = useState('');
   const [investor, setInvestor] = useState(10);
@@ -198,7 +243,14 @@ export default function TitanGame() {
 
   return (
     <div className="game-wrapper">
-      <NavBar currentChapter={currentChapter} completedChapters={completedChapters} visible={screen !== 'register' && screen !== 'title' && screen !== 'gameover' && screen !== 'final'} />
+      {/* ── PASSWORD GATE ── */}
+      {screen === 'password' && (
+        <PasswordGate onUnlock={() => setScreen('register')} />
+      )}
+
+      {screen !== 'password' && (
+      <>
+      <NavBar currentChapter={currentChapter} completedChapters={completedChapters} visible={screen !== 'register' && screen !== 'title' && screen !== 'gameover' && screen !== 'final' && screen !== 'ranking'} />
       <Modal data={modal} investor={investor} esg={esg} onClose={() => {}} />
 
       <div className="container">
@@ -352,10 +404,20 @@ export default function TitanGame() {
         {screen === 'final' && (
           <FinalSummary
             investor={investor} esg={esg} choices={choices} choiceLabels={choiceLabels}
-            playerName={playerName} submitted={submitted} onReset={resetGame}
+            playerName={playerName} submitted={submitted} onReset={() => setScreen('ranking')}
+          />
+        )}
+
+        {/* ── RANKING ── */}
+        {screen === 'ranking' && (
+          <RankingPage
+            currentPlayerName={playerName}
+            onPlayAgain={resetGame}
           />
         )}
       </div>
+      </>
+      )}
     </div>
   );
 }

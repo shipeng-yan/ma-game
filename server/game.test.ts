@@ -159,6 +159,27 @@ describe("game.getAnalytics", () => {
   });
 });
 
+describe("game.getRankings", () => {
+  it("returns rankings sorted by average score for public user", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const rankings = await caller.game.getRankings();
+    // Only Alice (gameOver=0) should appear; Bob (gameOver=1) is excluded
+    expect(rankings).toHaveLength(1);
+    expect(rankings[0].playerName).toBe("Alice");
+    expect(rankings[0].rank).toBe(1);
+    // Average of 14 and 12 = 13.0
+    expect(rankings[0].averageScore).toBe(13);
+    expect(rankings[0].investorScore).toBe(14);
+    expect(rankings[0].esgScore).toBe(12);
+  });
+
+  it("allows unauthenticated access", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const rankings = await caller.game.getRankings();
+    expect(Array.isArray(rankings)).toBe(true);
+  });
+});
+
 describe("game.sendSummaryEmail", () => {
   it("sends summary email for admin user", async () => {
     const caller = appRouter.createCaller(createAdminContext());

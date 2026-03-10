@@ -72,6 +72,24 @@ export const appRouter = router({
         return { success: true, id };
       }),
 
+    // Public: get rankings (average of investor + esg scores, no admin required)
+    getRankings: publicProcedure.query(async () => {
+      const sessions = await getAllGameSessions();
+      const completed = sessions.filter(s => !s.gameOver);
+      return completed
+        .map(s => ({
+          id: s.id,
+          playerName: s.playerName,
+          investorScore: s.investorScore,
+          esgScore: s.esgScore,
+          averageScore: Math.round(((s.investorScore + s.esgScore) / 2) * 10) / 10,
+          archetypeLabel: s.archetypeLabel,
+          completedAt: s.completedAt,
+        }))
+        .sort((a, b) => b.averageScore - a.averageScore)
+        .map((s, i) => ({ ...s, rank: i + 1 }));
+    }),
+
     // Admin: get all sessions with rankings
     getSessions: adminProcedure.query(async () => {
       const sessions = await getAllGameSessions();

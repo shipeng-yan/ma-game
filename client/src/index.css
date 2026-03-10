@@ -444,3 +444,52 @@
 .dashboard-login { min-height: 100vh; background: #F7F7F7; }
 .dashboard-loading { display: flex; align-items: center; justify-content: center; min-height: 100vh; font-size: 1.1rem; color: var(--charcoal-light); }
 .analytics-loading { padding: 1rem; color: var(--charcoal-light); }
+
+/* ====================== RANKING PAGE ====================== */
+.ranking-header { margin-bottom: 1.25rem; }
+.ranking-header h2 { margin-bottom: 0.4rem; }
+.ranking-header p { color: var(--charcoal-light); font-size: 0.9rem; margin: 0; }
+
+.my-rank-card {
+  background: linear-gradient(135deg, #1a365d, #2b6cb0);
+  color: #fff; border-radius: 12px; padding: 1.5rem 2rem;
+  margin-bottom: 1.25rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+}
+.my-rank-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; width: 100%; margin-bottom: -0.75rem; }
+.my-rank-position { font-family: Georgia, serif; font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+.my-rank-number { font-size: 1.1rem; opacity: 0.85; }
+.my-rank-scores { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.my-rank-scores .score-pill { background: rgba(255,255,255,0.2); color: #fff; }
+.my-rank-avg { font-size: 0.9rem; opacity: 0.9; }
+.my-rank-archetype { font-style: italic; opacity: 0.8; font-size: 0.9rem; margin-left: auto; }
+
+.ranking-loading { padding: 2rem; text-align: center; color: var(--charcoal-light); }
+
+.ranking-table-wrapper { overflow-x: auto; }
+.ranking-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.ranking-table th { background: #FAF8F5; padding: 0.6rem 0.75rem; text-align: left; font-weight: 700; border-bottom: 2px solid var(--game-border); white-space: nowrap; color: var(--charcoal); }
+.ranking-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border-light); vertical-align: middle; color: var(--charcoal); }
+.ranking-table tr:last-child td { border-bottom: none; }
+.ranking-table tr.ranking-row-me td { background: #EBF4FF; }
+.ranking-table tr.ranking-row-me:hover td { background: #dbeafe; }
+.ranking-table tr:hover td { background: #FAFAFA; }
+.ranking-table tr.ranking-row-me td { background: #EBF4FF !important; }
+
+.ranking-medal { font-size: 1.1rem; font-weight: 700; }
+.ranking-medal.top-three { font-size: 1.3rem; }
+.ranking-avg { font-family: Georgia, serif; font-size: 1rem; color: var(--charcoal); }
+.ranking-you-badge { font-size: 0.75rem; color: var(--investor-blue); font-weight: 700; font-style: normal; }
+
+/* ====================== PASSWORD GATE ====================== */
+.password-gate {
+  min-height: 100vh; background: var(--cream);
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+}
+.password-gate-card {
+  background: var(--card-bg); border: 1px solid var(--game-border);
+  border-radius: 12px; padding: 2.5rem 2rem; max-width: 420px; width: 100%;
+  box-shadow: var(--shadow-lg); text-align: center;
+}
+.password-gate-card h2 { font-family: Georgia, serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
+.password-gate-card p { color: var(--charcoal-light); font-size: 0.95rem; margin-bottom: 1.5rem; }
+.password-error { color: var(--negative); font-size: 0.9rem; margin-top: 0.5rem; font-weight: 600; }
