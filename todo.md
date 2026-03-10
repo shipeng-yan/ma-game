@@ -39,3 +39,6 @@
 
 ## Round 3 Requests
 - [x] Redesign reveal section: combine player decisions with Unilever reality in a per-chapter contrast layout
+
+## Round 4 Requests
+- [x] Redesign chapter outcome screen: apply per-decision contrast layout (player vs Unilever) to each chapter's "what actually happened" section

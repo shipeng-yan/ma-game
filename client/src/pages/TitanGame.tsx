@@ -357,29 +357,62 @@ export default function TitanGame() {
           <div className="screen active">
             <ScoreDisplay investor={investor} esg={esg} />
             <h2 style={{ marginTop: '1rem' }}>{chData.opening.title} — Results</h2>
-            <div className="card" style={{ marginTop: '1rem' }}>
-              <div className="card-header">Your Decisions</div>
-              <div className="decision-trail">
-                {[1, 2].map(dNum => {
-                  const key = ch + dNum;
-                  const choiceId = choices[key];
-                  const opts = dNum === 1 ? chData.d1.options : chData.d2.options;
-                  const opt = opts.find((o: Option) => o.id === choiceId);
-                  if (!opt) return null;
-                  return (
-                    <div key={key} className="trail-item">
-                      <div className="trail-label">Decision {key}</div>
-                      <div className="trail-choice">Option {choiceId}: {opt.label} — <em>{opt.desc}</em></div>
-                      <div style={{ marginTop: '0.4rem' }}>
-                        <ScoreBadge label="Investor" delta={opt.inv} type="investor" />
-                        <ScoreBadge label="ESG" delta={opt.esg} type="esg" />
+
+            {/* Per-decision contrast block */}
+            <div className="reveal-contrast-block" style={{ marginTop: '1.25rem' }}>
+              <div className="reveal-contrast-header">
+                <img src={CHAPTER_IMAGES[ch]} alt={CHAPTER_NAMES[ch]} className="reveal-contrast-img" />
+                <div className="reveal-contrast-title">
+                  <div className="reveal-contrast-tag">What Actually Happened</div>
+                  <h3 className="reveal-contrast-brand">{chData.opening.title}</h3>
+                  <p className="reveal-contrast-desc">{chData.outcome.whatHappened.split('\n\n')[0]}</p>
+                </div>
+              </div>
+
+              {[1, 2].map(dNum => {
+                const key = ch + dNum;
+                const choiceId = choices[key];
+                const opts = dNum === 1 ? chData.d1.options : chData.d2.options;
+                const opt = opts.find((o: Option) => o.id === choiceId);
+                const unilever = UNILEVER_DETAIL[key];
+                const matched = UNILEVER_ACTUAL[key]?.startsWith('Option ' + choiceId);
+                return (
+                  <div key={key} className="reveal-decision-row">
+                    <div className="reveal-decision-label">Decision {key}</div>
+                    <div className="reveal-decision-cols">
+                      <div className={`reveal-col reveal-col-you ${matched ? 'matched' : 'different'}`}>
+                        <div className="reveal-col-tag you-tag">You chose</div>
+                        <div className="reveal-col-choice">Option {choiceId}: {opt?.label}</div>
+                        <div className="reveal-col-desc">{opt?.desc}</div>
+                        <div className="reveal-col-scores">
+                          <span className={`score-change ${(opt?.inv ?? 0) > 0 ? 'positive' : (opt?.inv ?? 0) < 0 ? 'negative' : 'zero'}`}>📊 {(opt?.inv ?? 0) > 0 ? '+' : ''}{opt?.inv}</span>
+                          {' '}
+                          <span className={`score-change ${(opt?.esg ?? 0) > 0 ? 'positive' : (opt?.esg ?? 0) < 0 ? 'negative' : 'zero'}`}>🌿 {(opt?.esg ?? 0) > 0 ? '+' : ''}{opt?.esg}</span>
+                        </div>
+                      </div>
+                      <div className={`reveal-vs-badge ${matched ? 'match' : 'diff'}`}>
+                        {matched ? '✓ Match' : '≠ Differs'}
+                      </div>
+                      <div className="reveal-col reveal-col-real">
+                        <div className="reveal-col-tag real-tag">Unilever did</div>
+                        <div className="reveal-col-choice">{unilever?.label}</div>
+                        <div className="reveal-col-desc">{unilever?.context}</div>
                       </div>
                     </div>
-                  );
-                })}
-              </div>
+                  </div>
+                );
+              })}
+
+              {/* Full narrative — remaining paragraphs after the first */}
+              {chData.outcome.whatHappened.split('\n\n').slice(1).length > 0 && (
+                <div className="outcome-narrative">
+                  {chData.outcome.whatHappened.split('\n\n').slice(1).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              )}
             </div>
-            <CollapsibleSection title="What Actually Happened" content={chData.outcome.whatHappened} />
+
             <div className="reflection-box">
               <h3>Reflection Questions</h3>
               <ul>{chData.outcome.reflections.map((r, i) => <li key={i}>{r}</li>)}</ul>
