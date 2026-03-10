@@ -1,0 +1,27 @@
+# Titan Challenge — Project TODO
+
+## Phase 1: Database & Backend
+- [x] Define database schema (game_sessions table)
+- [x] Generate and apply database migration SQL
+- [x] Add DB query helpers in server/db.ts
+- [x] Add tRPC procedures: submitResult, getSessions, getAnalytics, sendSummaryEmail
+- [x] Upload game image assets to CDN
+
+## Phase 2: Game Integration
+- [x] Create player login/welcome page (name + email form)
+- [x] Integrate Titan Challenge game logic into React component
+- [x] Wire game completion to auto-submit results to backend
+- [x] Real-time score tracking and decision history
+
+## Phase 3: Teacher Dashboard
+- [x] Teacher dashboard page with sortable rankings table
+- [x] Performance analytics (avg scores, completion rates, decision patterns)
+- [x] CSV export functionality
+- [x] Automated email summary to teacher on game completion
+- [x] Protect dashboard with admin-only access
+
+## Phase 4: Quality & Delivery
+- [x] Write vitest tests for backend procedures (11 tests passing)
+- [x] Verify all features in browser
+- [x] Save checkpoint
+- [ ] Push to GitHub (ma-game repository)

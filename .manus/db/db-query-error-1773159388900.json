@@ -1,0 +1,13 @@
+{
+  "query": "CREATE TABLE `game_sessions` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`playerName` varchar(255) NOT NULL,\n\t`playerEmail` varchar(320) NOT NULL,\n\t`investorScore` int NOT NULL DEFAULT 0,\n\t`esgScore` int NOT NULL DEFAULT 0,\n\t`finalOutcome` varchar(64) NOT NULL DEFAULT '',\n\t`archetypeLabel` varchar(128) NOT NULL DEFAULT '',\n\t`decisions` json NOT NULL DEFAULT ('[]'),\n\t`completedAt` timestamp NOT NULL DEFAULT (now()),\n\t`durationSeconds` int DEFAULT 0,\n\t`gameOver` int NOT NULL DEFAULT 0,\n\tCONSTRAINT `game_sessions_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3k3ax81rNkRFWWS.root --database SVv7WmdfXd3HTuqUe2VA23 --execute CREATE TABLE `game_sessions` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`playerName` varchar(255) NOT NULL,\n\t`playerEmail` varchar(320) NOT NULL,\n\t`investorScore` int NOT NULL DEFAULT 0,\n\t`esgScore` int NOT NULL DEFAULT 0,\n\t`finalOutcome` varchar(64) NOT NULL DEFAULT '',\n\t`archetypeLabel` varchar(128) NOT NULL DEFAULT '',\n\t`decisions` json NOT NULL DEFAULT ('[]'),\n\t`completedAt` timestamp NOT NULL DEFAULT (now()),\n\t`durationSeconds` int DEFAULT 0,\n\t`gameOver` int NOT NULL DEFAULT 0,\n\tCONSTRAINT `game_sessions_id` PRIMARY KEY(`id`)\n);",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1064 (42000) at line 1: You have an error in your SQL syntax; check the manual that corresponds to your TiDB version for the right syntax to use line 9 column 41 near \"'[]'),",
+    "\t`completedAt` timestamp NOT NULL DEFAULT (now()),",
+    "\t`durationSeconds` int DEFAULT 0,",
+    "\t`gameOver` int NOT NULL DEFAULT 0,",
+    "\tCONSTRAINT `game_sessions_id` PRIMARY KEY(`id`)",
+    ")\""
+  ]
+}
