@@ -31,3 +31,8 @@
 - [x] Add live ranking page shown at the end of the game (ranked by average of investor + ESG scores)
 - [x] Update backend: expose a public endpoint for rankings (no admin required)
 - [x] Make GitHub repository public
+
+## Round 2 Requests
+- [x] Add "View Ranking" button on the final summary page
+- [x] Build dedicated /ranking projector page (full-screen, large fonts, auto-refresh, top-10 display)
+- [x] Register /ranking route in App.tsx (no password required for teacher)

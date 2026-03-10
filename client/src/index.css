@@ -493,3 +493,168 @@
 .password-gate-card h2 { font-family: Georgia, serif; font-size: 1.6rem; margin-bottom: 0.5rem; }
 .password-gate-card p { color: var(--charcoal-light); font-size: 0.95rem; margin-bottom: 1.5rem; }
 .password-error { color: var(--negative); font-size: 0.9rem; margin-top: 0.5rem; font-weight: 600; }
+
+/* ====================== PROJECTOR RANKING PAGE ====================== */
+.projector-wrapper {
+  min-height: 100vh;
+  background: #0f172a;
+  color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.projector-header {
+  background: linear-gradient(135deg, #1e3a5f, #1e40af);
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.projector-title {
+  font-family: Georgia, serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.projector-trophy { font-size: 1.8rem; }
+
+.projector-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.projector-count {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+}
+
+.projector-refresh {
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  color: rgba(255,255,255,0.5);
+}
+
+.projector-body {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-x: auto;
+}
+
+.projector-loading,
+.projector-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+}
+
+.projector-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+}
+
+.projector-table thead tr {
+  border-bottom: 2px solid rgba(255,255,255,0.15);
+}
+
+.projector-table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.45);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.projector-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  vertical-align: middle;
+}
+
+.projector-row { transition: background 0.2s; }
+.projector-row:hover td { background: rgba(255,255,255,0.04); }
+
+.projector-row.rank-gold td   { background: rgba(255, 215, 0, 0.08); }
+.projector-row.rank-silver td { background: rgba(192, 192, 192, 0.06); }
+.projector-row.rank-bronze td { background: rgba(205, 127, 50, 0.06); }
+
+.col-rank { width: 80px; text-align: center; }
+.col-name { min-width: 180px; }
+.col-score { width: 130px; text-align: center; }
+.col-avg { width: 130px; text-align: center; }
+.col-arch { min-width: 200px; }
+
+.proj-medal {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+
+.proj-score-pill {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+.proj-score-pill.investor {
+  background: rgba(43, 108, 176, 0.3);
+  color: #90cdf4;
+  border: 1px solid rgba(43,108,176,0.4);
+}
+
+.proj-score-pill.esg {
+  background: rgba(72, 135, 74, 0.3);
+  color: #9ae6b4;
+  border: 1px solid rgba(72,135,74,0.4);
+}
+
+.proj-avg {
+  font-family: Georgia, serif;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.proj-arch {
+  font-size: clamp(0.8rem, 1.3vw, 1rem);
+  color: rgba(255,255,255,0.6);
+  font-style: italic;
+}
+
+.projector-footnote {
+  margin-top: 1.5rem;
+  text-align: center;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.9rem;
+}
+
+.projector-footer {
+  padding: 0.85rem 2.5rem;
+  background: rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}

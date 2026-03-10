@@ -6,12 +6,14 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import TitanGame from "./pages/TitanGame";
 import Dashboard from "./pages/Dashboard";
+import ProjectorRanking from "./pages/ProjectorRanking";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={TitanGame} />
       <Route path={"/dashboard"} component={Dashboard} />
+      <Route path={"/ranking"} component={ProjectorRanking} />
       <Route path={"/404"} component={NotFound} />
       <Route component={NotFound} />
     </Switch>

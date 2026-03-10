@@ -404,7 +404,9 @@ export default function TitanGame() {
         {screen === 'final' && (
           <FinalSummary
             investor={investor} esg={esg} choices={choices} choiceLabels={choiceLabels}
-            playerName={playerName} submitted={submitted} onReset={() => setScreen('ranking')}
+            playerName={playerName} submitted={submitted}
+            onReset={resetGame}
+            onViewRanking={() => setScreen('ranking')}
           />
         )}
 
@@ -439,9 +441,9 @@ function CollapsibleSection({ title, content }: { title: string; content: string
 }
 
 // ─── Final Summary ─────────────────────────────────────────────────────────────
-function FinalSummary({ investor, esg, choices, choiceLabels, playerName, submitted, onReset }: {
+function FinalSummary({ investor, esg, choices, choiceLabels, playerName, submitted, onReset, onViewRanking }: {
   investor: number; esg: number; choices: Record<string, string>; choiceLabels: Record<string, string>;
-  playerName: string; submitted: boolean; onReset: () => void;
+  playerName: string; submitted: boolean; onReset: () => void; onViewRanking: () => void;
 }) {
   const archetype = getArchetype(choices);
   return (
@@ -536,7 +538,10 @@ function FinalSummary({ investor, esg, choices, choiceLabels, playerName, submit
         </div>
       )}
 
-      <button className="btn-primary btn-block" onClick={onReset} style={{ marginTop: '1rem' }}>Play Again</button>
+      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1rem', flexWrap: 'wrap' }}>
+        <button className="btn-primary" style={{ flex: 1 }} onClick={onViewRanking}>🏆 View Class Ranking</button>
+        <button className="btn-secondary" style={{ flex: 1 }} onClick={onReset}>Play Again</button>
+      </div>
     </div>
   );
 }
