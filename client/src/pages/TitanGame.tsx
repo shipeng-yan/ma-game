@@ -3,7 +3,7 @@ import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 import {
   CHAPTERS, CHAPTER_NAMES, CHAPTER_IMAGES, HERO_IMAGE, DATA, CONSEQUENCES,
-  getArchetype, UNILEVER_ACTUAL, CHAPTER_REVEAL_NAMES, getScoreBarWidth, Chapter, Option
+  getArchetype, UNILEVER_ACTUAL, UNILEVER_DETAIL, CHAPTER_REVEAL_NAMES, getScoreBarWidth, Chapter, Option
 } from "@/lib/gameData";
 import RankingPage from "./RankingPage";
 
@@ -485,47 +485,64 @@ function FinalSummary({ investor, esg, choices, choiceLabels, playerName, submit
 
       <div className="card" style={{ marginTop: '1.5rem' }}>
         <div className="card-header">The Real Story — Identity Reveal</div>
-        <p>The companies behind this game are all real.</p>
-        <p><strong>Titan Consumer Group</strong> is <strong>Unilever</strong> — one of the world's largest consumer goods companies, with over 400 brands and operations in 190 countries.</p>
+        <p>The companies behind this game are all real. <strong>Titan Consumer Group</strong> is <strong>Unilever</strong> — one of the world's largest consumer goods companies, with over 400 brands and operations in 190 countries.</p>
+        <p>Each chapter below reveals the real brand and shows, decision by decision, how your choices compare to what Unilever actually did.</p>
       </div>
 
-      <div className="reveal-grid">
-        {CHAPTERS.map(ch => (
-          <div key={ch} className="reveal-card">
-            <img src={CHAPTER_IMAGES[ch]} alt={CHAPTER_REVEAL_NAMES[ch]} />
-            <div className="reveal-card-body">
-              <h3>Chapter {ch} — {CHAPTER_NAMES[ch]} is {CHAPTER_REVEAL_NAMES[ch].split(' / ')[1]}</h3>
-              <p>{ch === 'A' && "Acquired in 2000. Unilever created an independent board but overrode it in 2022 when Ben & Jerry's tried to stop sales in occupied Palestinian territories."}
-                {ch === 'B' && "Acquired in 2015. The brand was partially integrated, struggled financially, and was quietly wound down by 2024-2025."}
-                {ch === 'C' && "Acquired in 2016 for ~$700M. The brand's products survived but its political activism was gradually silenced."}
-                {ch === 'D' && "Acquired in 2017. Unilever sold its tea business (including Pukka) to CVC Capital Partners for €4.5 billion in 2022. By 2024, Pukka lost its B Corp certification, its Bristol offices were closed, and most staff were let go."}
-              </p>
+      {CHAPTERS.map(ch => {
+        const realName = CHAPTER_REVEAL_NAMES[ch].split(' / ')[1];
+        const chapterDesc: Record<string, string> = {
+          A: "Acquired in 2000. Unilever created an independent board but overrode it in 2022 when Ben & Jerry's tried to stop sales in occupied Palestinian territories.",
+          B: "Acquired in 2015. The brand was partially integrated, struggled financially, and was quietly wound down by 2024–2025.",
+          C: "Acquired in 2016 for ~$700M. The brand's products survived but its political activism was gradually silenced.",
+          D: "Acquired in 2017. Unilever sold its tea business (including Pukka) to CVC Capital Partners for €4.5 billion in 2022. By 2024, Pukka lost its B Corp certification, its Bristol offices were closed, and most staff were let go.",
+        };
+        return (
+          <div key={ch} className="reveal-contrast-block">
+            <div className="reveal-contrast-header">
+              <img src={CHAPTER_IMAGES[ch]} alt={realName} className="reveal-contrast-img" />
+              <div className="reveal-contrast-title">
+                <div className="reveal-contrast-tag">Chapter {ch} — {CHAPTER_NAMES[ch]}</div>
+                <h3 className="reveal-contrast-brand">{CHAPTER_NAMES[ch]} is <span className="reveal-real-name">{realName}</span></h3>
+                <p className="reveal-contrast-desc">{chapterDesc[ch]}</p>
+              </div>
             </div>
+            {[1, 2].map(dNum => {
+              const key = ch + dNum;
+              const choiceId = choices[key];
+              const opts = dNum === 1 ? DATA[ch].d1.options : DATA[ch].d2.options;
+              const opt = opts.find((o: Option) => o.id === choiceId);
+              const unilever = UNILEVER_DETAIL[key];
+              const matched = UNILEVER_ACTUAL[key]?.startsWith('Option ' + choiceId);
+              return (
+                <div key={key} className="reveal-decision-row">
+                  <div className="reveal-decision-label">Decision {key}</div>
+                  <div className="reveal-decision-cols">
+                    <div className={`reveal-col reveal-col-you ${matched ? 'matched' : 'different'}`}>
+                      <div className="reveal-col-tag you-tag">You chose</div>
+                      <div className="reveal-col-choice">Option {choiceId}: {opt?.label}</div>
+                      <div className="reveal-col-desc">{opt?.desc}</div>
+                      <div className="reveal-col-scores">
+                        <span className={`score-change ${(opt?.inv ?? 0) > 0 ? 'positive' : (opt?.inv ?? 0) < 0 ? 'negative' : 'zero'}`}>📊 {(opt?.inv ?? 0) > 0 ? '+' : ''}{opt?.inv}</span>
+                        {' '}
+                        <span className={`score-change ${(opt?.esg ?? 0) > 0 ? 'positive' : (opt?.esg ?? 0) < 0 ? 'negative' : 'zero'}`}>🌿 {(opt?.esg ?? 0) > 0 ? '+' : ''}{opt?.esg}</span>
+                      </div>
+                    </div>
+                    <div className={`reveal-vs-badge ${matched ? 'match' : 'diff'}`}>
+                      {matched ? '✓ Match' : '≠ Differs'}
+                    </div>
+                    <div className="reveal-col reveal-col-real">
+                      <div className="reveal-col-tag real-tag">Unilever did</div>
+                      <div className="reveal-col-choice">{unilever?.label}</div>
+                      <div className="reveal-col-desc">{unilever?.context}</div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ))}
-      </div>
-
-      <div className="card" style={{ marginTop: '1.5rem' }}>
-        <div className="card-header">Compare Your Decisions with Reality</div>
-        <div className="comparison-table-wrapper">
-          <table className="comparison-table">
-            <thead>
-              <tr><th>Chapter</th><th>Your Choice (D1)</th><th>Your Choice (D2)</th><th>Unilever (D1)</th><th>Unilever (D2)</th></tr>
-            </thead>
-            <tbody>
-              {CHAPTERS.map(ch => (
-                <tr key={ch}>
-                  <td><strong>{CHAPTER_REVEAL_NAMES[ch]}</strong></td>
-                  <td>Option {choices[ch + '1']}: {choiceLabels[ch + '1']}</td>
-                  <td>Option {choices[ch + '2']}: {choiceLabels[ch + '2']}</td>
-                  <td>{UNILEVER_ACTUAL[ch + '1']}</td>
-                  <td>{UNILEVER_ACTUAL[ch + '2']}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+        );
+      })}
 
       <div className="final-reflection">
         <p>You managed four ESG acquisitions. Unilever managed the same four in real life.</p>

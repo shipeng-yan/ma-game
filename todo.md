@@ -36,3 +36,6 @@
 - [x] Add "View Ranking" button on the final summary page
 - [x] Build dedicated /ranking projector page (full-screen, large fonts, auto-refresh, top-10 display)
 - [x] Register /ranking route in App.tsx (no password required for teacher)
+
+## Round 3 Requests
+- [x] Redesign reveal section: combine player decisions with Unilever reality in a per-chapter contrast layout

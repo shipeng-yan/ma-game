@@ -255,6 +255,42 @@ export const UNILEVER_ACTUAL: Record<string, string> = {
   D2: 'Option C — Sold as part of larger deal',
 };
 
+// Detailed Unilever real-world context per decision key
+export const UNILEVER_DETAIL: Record<string, { label: string; context: string }> = {
+  A1: {
+    label: 'Option A — Strong independent board',
+    context: 'Unilever created a fully independent board for Ben & Jerry\'s with legal authority to protect its social mission — the same as Option A. This structure held for over 20 years.',
+  },
+  A2: {
+    label: 'Option C — Blocked the campaign',
+    context: 'In 2022, Ben & Jerry\'s board voted to end sales in Israeli-occupied Palestinian territories. Unilever\'s main board overrode this decision and sold those operations to a local licensee — effectively blocking the campaign to protect a business relationship.',
+  },
+  B1: {
+    label: 'Option B — Partial integration',
+    context: 'Unilever kept REN Clean Skincare\'s product formulations and brand identity largely intact after the 2015 acquisition, while using its own distribution and marketing infrastructure — closest to Option B.',
+  },
+  B2: {
+    label: 'Option D — Sold / closed the brand',
+    context: 'After years of underperformance, Unilever was unable to find a buyer at an acceptable price. By 2024–2025 the brand was quietly wound down and its products discontinued — the outcome of Option D.',
+  },
+  C1: {
+    label: 'Option B — Voice with review process',
+    context: 'After acquiring Seventh Generation in 2016, Unilever allowed the brand to continue publishing its Corporate Responsibility Report, but internal review processes were introduced that shaped what positions were publicly taken — closest to Option B.',
+  },
+  C2: {
+    label: 'Option C — Quietly blocked activism',
+    context: 'Seventh Generation\'s plastic-ban campaign was significantly scaled back after Unilever\'s government affairs team raised concerns about conflicts with Unilever\'s own lobbying positions. The campaign was not publicly cancelled, but it was quietly stopped — Option C.',
+  },
+  D1: {
+    label: 'Option A/B — Kept standards initially',
+    context: 'After acquiring Pukka Herbs in 2017, Unilever maintained its organic certifications, B Corp status, and kept co-founder Sebastian Pole on as an advisor via a Mission Council — initially resembling Option A or B.',
+  },
+  D2: {
+    label: 'Option C — Sold as part of larger deal',
+    context: 'In 2022, Unilever sold its entire tea division to CVC Capital Partners for €4.5 billion. Pukka was included in the package with no special protections. By 2024, Pukka lost its B Corp certification, its Bristol offices closed, and 90 of 120 staff were made redundant — Option C.',
+  },
+};
+
 export const CHAPTER_REVEAL_NAMES: Record<Chapter, string> = {
   A: "Rebel / Ben & Jerry's",
   B: 'Pure Skin / REN Clean Skincare',
