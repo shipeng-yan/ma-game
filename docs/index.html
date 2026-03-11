@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Titan Challenge — MSAF7008</title>
+  <meta name="description" content="An interactive ESG strategy simulation for MSAF7008 Corporate Governance and Social Responsibility." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:   #0f2044;
+      --blue:   #1d4ed8;
+      --gold:   #d97706;
+      --light:  #f8fafc;
+      --muted:  #64748b;
+      --border: #e2e8f0;
+      --white:  #ffffff;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light);
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--navy);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663381269942/SVv7WmdfXd3HTuqUe2VA23/titan-hero_ed1d2723.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.22;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(15,32,68,0.97) 0%, rgba(15,32,68,0.75) 60%, rgba(15,32,68,0.4) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+    }
+
+    .course-badge {
+      display: inline-block;
+      background: rgba(217,119,6,0.18);
+      border: 1px solid rgba(217,119,6,0.45);
+      color: #fbbf24;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 span { color: #fbbf24; }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.78);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn-enter {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.9rem 2.6rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 20px rgba(29,78,216,0.45);
+    }
+
+    .btn-enter:hover {
+      background: #1e40af;
+      transform: translateY(-2px);
+    }
+
+    .btn-enter::after { content: ' →'; }
+
+    .hero-note {
+      margin-top: 1.2rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.35);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-align: center;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── CHAPTERS ── */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: Georgia, serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .chapter-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .chapter-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .chapter-body {
+      padding: 1rem;
+    }
+
+    .chapter-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.3rem;
+    }
+
+    .chapter-name {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .chapter-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .how-section .section-label { color: #fbbf24; }
+    .how-section .section-title { color: #fff; }
+    .how-section .section-sub   { color: rgba(255,255,255,0.65); }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .step-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .step-desc {
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.55;
+    }
+
+    /* ── SCORES ── */
+    .scores-section { background: #f1f5f9; }
+
+    .scores-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 640px;
+    }
+
+    @media (max-width: 480px) { .scores-grid { grid-template-columns: 1fr; } }
+
+    .score-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .score-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+
+    .score-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 0.35rem;
+    }
+
+    .score-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, #1d4ed8 0%, #0f2044 100%);
+      text-align: center;
+    }
+
+    .cta-section .section-title { color: #fff; }
+    .cta-section .section-sub   { color: rgba(255,255,255,0.72); margin: 0 auto 2rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+    }
+
+    footer a { color: rgba(255,255,255,0.55); text-decoration: none; }
+    footer a:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .hero-content { padding: 4rem 1.25rem 3rem; }
+      .section { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="course-badge">MSAF7008 · Corporate Governance &amp; Social Responsibility</div>
+      <h1>The <span>Titan</span> Challenge</h1>
+      <p class="hero-desc">
+        You are the newly appointed CEO of Titan Consumer Group. Four iconic brands are under your control.
+        Every decision you make will be judged on two dimensions: investor confidence and ESG credibility.
+      </p>
+      <a href="https://titangame.manus.space" class="btn-enter">Enter the Game</a>
+      <p class="hero-note">Password required · For enrolled students only</p>
+    </div>
+    <div class="scroll-hint">↓ &nbsp; scroll to learn more</div>
+  </section>
+
+  <!-- CHAPTERS -->
+  <section class="section">
+    <div class="section-label">Four Chapters</div>
+    <h2 class="section-title">Real brands. Real dilemmas.</h2>
+    <p class="section-sub">Each chapter is based on an actual Unilever acquisition and the governance tensions that followed.</p>
+    <div class="chapters-grid">
+      <div class="chapter-card">
+        <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663381269942/SVv7WmdfXd3HTuqUe2VA23/ch-a_bc27fe1c.jpg" alt="Rebel Consumer Goods" class="chapter-img" />
+        <div class="chapter-body">
+          <div class="chapter-num">Chapter 1</div>
+          <div class="chapter-name">Rebel Consumer Goods</div>
+          <p class="chapter-desc">A mission-driven brand demands board independence. How much autonomy do you grant?</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663381269942/SVv7WmdfXd3HTuqUe2VA23/ch-b_57733e84.jpg" alt="Pure Skin Co" class="chapter-img" />
+        <div class="chapter-body">
+          <div class="chapter-num">Chapter 2</div>
+          <div class="chapter-name">Pure Skin Co</div>
+          <p class="chapter-desc">A natural beauty brand's ethical sourcing conflicts with your margin targets. What gives?</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663381269942/SVv7WmdfXd3HTuqUe2VA23/ch-c_651aaee2.jpg" alt="Clean Home" class="chapter-img" />
+        <div class="chapter-body">
+          <div class="chapter-num">Chapter 3</div>
+          <div class="chapter-name">Clean Home</div>
+          <p class="chapter-desc">A household brand's activist founders want to campaign on plastic. Do you let them?</p>
+        </div>
+      </div>
+      <div class="chapter-card">
+        <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663381269942/SVv7WmdfXd3HTuqUe2VA23/ch-d_e353a4da.jpg" alt="Herb &amp; Soul" class="chapter-img" />
+        <div class="chapter-body">
+          <div class="chapter-num">Chapter 4</div>
+          <div class="chapter-name">Herb &amp; Soul</div>
+          <p class="chapter-desc">A heritage herbal brand faces a divestiture decision. Sell, absorb, or preserve?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="section">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-title">Play. Decide. Compare.</h2>
+      <p class="section-sub">The game takes approximately 20–30 minutes to complete.</p>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-title">Enter your name &amp; email</div>
+          <p class="step-desc">Your results are saved automatically so the class can compare strategies after the session.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-title">Make two decisions per chapter</div>
+          <p class="step-desc">Each choice moves your Investor Confidence and ESG Credibility scores up or down.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-title">See what Unilever actually did</div>
+          <p class="step-desc">After each chapter, your decisions are contrasted with the real corporate outcome.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-title">Check the class ranking</div>
+          <p class="step-desc">A live leaderboard ranks all players by their average score — visible to the whole class.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORING -->
+  <section class="scores-section">
+    <div class="section">
+      <div class="section-label">Scoring</div>
+      <h2 class="section-title">Two metrics. One tension.</h2>
+      <p class="section-sub">Your ranking is determined by the average of both scores — rewarding balanced governance, not just profit maximisation.</p>
+      <div class="scores-grid">
+        <div class="score-card">
+          <div class="score-icon">📊</div>
+          <div class="score-name">Investor Confidence</div>
+          <p class="score-desc">Reflects how financial markets and shareholders perceive your strategic decisions. Starts at 10.</p>
+        </div>
+        <div class="score-card">
+          <div class="score-icon">🌿</div>
+          <div class="score-name">ESG Credibility</div>
+          <p class="score-desc">Reflects how stakeholders, NGOs, and the public assess your environmental and social commitments. Starts at 10.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="section">
+      <h2 class="section-title">Ready to lead Titan?</h2>
+      <p class="section-sub">Enter the game, make your decisions, and see how your governance strategy compares with your classmates — and with Unilever's real choices.</p>
+      <a href="https://titangame.manus.space" class="btn-enter" style="font-size:1.1rem; padding:1rem 3rem;">Enter the Game</a>
+      <p style="margin-top:1rem; font-size:0.82rem; color:rgba(255,255,255,0.4);">Password required · MSAF7008 enrolled students only</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>MSAF7008 Corporate Governance and Social Responsibility &nbsp;·&nbsp;
+      <a href="https://github.com/shipeng-yan/ma-game">GitHub Repository</a>
+    </p>
+  </footer>
+
+</body>
+</html>
