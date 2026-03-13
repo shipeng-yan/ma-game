@@ -44,6 +44,11 @@
 - [x] Redesign chapter outcome screen: apply per-decision contrast layout (player vs Unilever) to each chapter's "what actually happened" section
 
 ## Round 5 Requests
-- [ ] Create GitHub Pages index.html landing page as gateway to the game
-- [ ] Enable GitHub Pages on the repository (gh-pages branch or docs/ folder)
-- [ ] Push landing page to GitHub
+- [x] Create GitHub Pages index.html landing page as gateway to the game
+- [x] Enable GitHub Pages on the repository (gh-pages branch or docs/ folder) — requires manual activation in GitHub Settings
+- [x] Push landing page to GitHub
+
+## Round 6 Requests
+- [x] Replace simulated negative-score records with low-but-positive score records
+- [x] Add game-over detection: when either score hits 0 or below, show a game-over screen
+- [x] Game-over restart: send player back to Chapter 1 without re-asking for login

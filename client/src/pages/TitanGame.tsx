@@ -147,11 +147,11 @@ export default function TitanGame() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   function checkGameOver(inv: number, esgVal: number): boolean {
-    if (inv < 0 || esgVal < 0) {
+    if (inv <= 0 || esgVal <= 0) {
       let reason = '';
-      if (inv < 0 && esgVal < 0) reason = "Both your Investor Confidence and ESG Credibility have dropped below zero. You lost the trust of investors and the credibility of your sustainability commitments at the same time.";
-      else if (inv < 0) reason = "Your Investor Confidence has dropped below zero. Investors have lost faith in your ability to manage the company's financial interests.";
-      else reason = "Your ESG Credibility has dropped below zero. The market no longer believes in Titan's environmental and social commitments.";
+      if (inv <= 0 && esgVal <= 0) reason = "Both your Investor Confidence and ESG Credibility have reached zero. You lost the trust of investors and the credibility of your sustainability commitments at the same time.";
+      else if (inv <= 0) reason = "Your Investor Confidence has reached zero. Investors have lost faith in your ability to manage the company's financial interests.";
+      else reason = "Your ESG Credibility has reached zero. The market no longer believes in Titan's environmental and social commitments.";
       setGameOverReason(reason);
       setScreen('gameover');
       scrollTop();
@@ -231,10 +231,26 @@ export default function TitanGame() {
   }
 
   function resetGame() {
+    // Full reset — clears player info too (used by Play Again on final screen)
     setScreen('register'); setInvestor(10); setEsg(10);
     setCurrentChapter(null); setCompletedChapters([]); setChoices({});
     setChoiceLabels({}); setDecisions([]); setModal(null); setSubmitted(false);
     setPlayerName(''); setPlayerEmail('');
+    scrollTop();
+  }
+
+  function restartFromChapter1() {
+    // Soft reset — keeps player name/email, restarts from Chapter A decision 1
+    setInvestor(10); setEsg(10);
+    setCurrentChapter('A');
+    setCompletedChapters([]);
+    setChoices({});
+    setChoiceLabels({});
+    setDecisions([]);
+    setModal(null);
+    setSubmitted(false);
+    startTimeRef.current = Date.now();
+    setScreen('opening');
     scrollTop();
   }
 
@@ -428,7 +444,10 @@ export default function TitanGame() {
               <h1>Game Over</h1>
               <p style={{ fontSize: '1.15rem', marginBottom: '1rem' }}>The board has asked for your resignation.</p>
               <p>{gameOverReason}</p>
-              <button className="btn-primary" onClick={resetGame} style={{ marginTop: '1.5rem' }}>Play Again</button>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+                <button className="btn-primary" onClick={restartFromChapter1}>Try Again →</button>
+                <button className="btn-secondary" onClick={resetGame} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)', color: 'rgba(255,255,255,0.7)', padding: '0.75rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontSize: '0.95rem' }}>Play as Someone Else</button>
+              </div>
             </div>
           </div>
         )}
