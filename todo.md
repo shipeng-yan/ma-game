@@ -52,3 +52,10 @@
 - [x] Replace simulated negative-score records with low-but-positive score records
 - [x] Add game-over detection: when either score hits 0 or below, show a game-over screen
 - [x] Game-over restart: send player back to Chapter 1 without re-asking for login
+
+## Round 7 Requests
+- [x] Decision confirmation pop-up: after clicking an option, show modal asking to confirm and provide written rationale (can be empty)
+- [x] Store rationale per decision in the decisions JSON field
+- [x] Enhanced final comparison dashboard: show student choice + all classmates aggregated choices + Titan actual, with visual indicators and discussion prompts
+- [x] Backend: expose aggregate classmate choice distribution per decision key
+- [x] Downloadable PDF summary: student's choice journey, scores, rationale per decision

@@ -19,6 +19,7 @@ const DecisionSchema = z.object({
   choiceDesc: z.string(),
   investorDelta: z.number(),
   esgDelta: z.number(),
+  rationale: z.string().optional(),
 });
 
 export const appRouter = router({
@@ -88,6 +89,29 @@ export const appRouter = router({
         }))
         .sort((a, b) => b.averageScore - a.averageScore)
         .map((s, i) => ({ ...s, rank: i + 1 }));
+    }),
+
+    // Public: get choice distribution per decision key (for classmate aggregate)
+    getChoiceDistribution: publicProcedure.query(async () => {
+      const sessions = await getAllGameSessions();
+      const completed = sessions.filter(s => !s.gameOver);
+      // decision keys: A1, A2, B1, B2, C1, C2, D1, D2
+      const keys = ['A1','A2','B1','B2','C1','C2','D1','D2'];
+      const dist: Record<string, Record<string, number>> = {};
+      for (const key of keys) dist[key] = {};
+      for (const session of completed) {
+        let decisions: Array<{ chapter: string; choiceLabel: string }> = [];
+        try { decisions = typeof session.decisions === 'string' ? JSON.parse(session.decisions) : session.decisions; } catch {}
+        for (const d of decisions) {
+          if (!keys.includes(d.chapter)) continue;
+          // Extract option letter from choiceLabel like "Option A: ..."
+          const match = d.choiceLabel.match(/^Option ([A-Z])/);
+          if (!match) continue;
+          const opt = match[1];
+          dist[d.chapter][opt] = (dist[d.chapter][opt] || 0) + 1;
+        }
+      }
+      return { distribution: dist, total: completed.length };
     }),
 
     // Admin: get all sessions with rankings

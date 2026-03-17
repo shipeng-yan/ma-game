@@ -298,6 +298,18 @@ export const CHAPTER_REVEAL_NAMES: Record<Chapter, string> = {
   D: 'Herb / Pukka Herbs',
 };
 
+// Discussion prompts per decision key for the final comparison dashboard
+export const DISCUSSION_PROMPTS: Record<string, string> = {
+  A1: 'Did your governance structure actually protect Rebel\'s mission — or just delay the inevitable? What does the class distribution tell you about how students weigh legal protection vs. operational control?',
+  A2: 'When commercial pressure conflicts with a brand\'s social mission, who should win? How did your classmates split on this — and what does the majority choice reveal about how future managers think about ESG commitments under stress?',
+  B1: 'Full integration destroys identity; full independence destroys synergies. Where did the class land on this spectrum — and does the distribution match what you\'d expect from a group of future business leaders?',
+  B2: 'When a brand underperforms financially, is selling or closing it a failure of ESG governance or a rational business decision? How does your class\'s response compare to what Unilever actually did?',
+  C1: 'Allowing a brand to speak but controlling what it says — is that authentic ESG, or a form of greenwashing? Look at how the class split: does the majority choice represent genuine commitment or managed optics?',
+  C2: 'Seventh Generation\'s plastic-ban campaign was stopped quietly, not publicly cancelled. Is silent suppression of activism worse than an open override? How many of your classmates chose the same path as Unilever?',
+  D1: 'Keeping certifications and mission advisors costs money and limits flexibility. How did the class balance short-term efficiency against long-term brand integrity — and does the distribution surprise you?',
+  D2: 'When a parent company sells an ESG brand as part of a larger deal, is that a betrayal of the acquisition promise — or just business? Compare your class\'s choices with Unilever\'s actual decision to sell Pukka with no special protections.',
+};
+
 export function getScoreBarWidth(val: number): number {
   return Math.max(0, Math.min(100, (val / 20) * 100));
 }

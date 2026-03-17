@@ -844,3 +844,41 @@
 .outcome-narrative p:last-child {
   margin-bottom: 0;
 }
+
+/* Confirmation Modal */
+.confirm-modal { max-width: 520px; width: 95%; }
+.confirm-modal-header { margin-bottom: 1rem; }
+.confirm-modal-tag { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--game-accent); margin-bottom: 0.4rem; }
+.confirm-modal-desc { font-size: 0.9rem; color: var(--charcoal-light); margin-top: 0.4rem; line-height: 1.5; }
+.confirm-modal-scores { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; padding: 0.6rem 0.8rem; background: rgba(0,0,0,0.03); border-radius: 6px; }
+.confirm-modal-rationale { margin-bottom: 1rem; }
+.rationale-textarea { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--game-border); border-radius: 6px; background: #fff; color: var(--charcoal); font-size: 0.9rem; font-family: inherit; resize: vertical; margin-top: 0.4rem; transition: border-color 0.2s; }
+.rationale-textarea:focus { outline: none; border-color: var(--game-accent); }
+.confirm-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+.confirm-cancel { min-width: 110px; }
+.confirm-ok { min-width: 160px; }
+/* Three-column reveal */
+.reveal-decision-cols.three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; align-items: start; }
+@media (max-width: 860px) { .reveal-decision-cols.three-cols { grid-template-columns: 1fr; } }
+/* Class aggregate bars */
+.reveal-col-class { background: #f8f9ff; border: 1px solid #dde1f5; border-radius: 8px; padding: 0.85rem; }
+.class-tag { background: rgba(79,70,229,0.08); color: #4338ca; border: 1px solid rgba(79,70,229,0.2); }
+.class-bar-row { display: grid; grid-template-columns: 80px 1fr 36px; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; padding: 0.2rem 0.3rem; border-radius: 4px; }
+.class-bar-row.class-bar-yours { background: rgba(139,105,20,0.06); }
+.class-bar-label { display: flex; flex-direction: column; gap: 0.15rem; }
+.class-bar-opt { font-size: 0.75rem; font-weight: 700; color: var(--charcoal-light); }
+.class-bar-top-badge { font-size: 0.62rem; background: rgba(79,70,229,0.12); color: #4338ca; border-radius: 3px; padding: 0.05rem 0.3rem; white-space: nowrap; }
+.class-bar-you-badge { font-size: 0.62rem; background: rgba(139,105,20,0.15); color: var(--game-accent); border-radius: 3px; padding: 0.05rem 0.3rem; }
+.class-bar-track { height: 8px; background: rgba(0,0,0,0.08); border-radius: 4px; overflow: hidden; }
+.class-bar-fill { height: 100%; background: linear-gradient(90deg, #4f46e5, #818cf8); border-radius: 4px; transition: width 0.6s ease; }
+.class-bar-pct { font-size: 0.75rem; font-weight: 700; color: var(--charcoal-light); text-align: right; }
+.class-bar-empty { font-size: 0.8rem; color: var(--charcoal-light); font-style: italic; padding: 0.5rem 0; }
+/* Inline match badge */
+.reveal-vs-badge.inline-badge { display: inline-block; margin-bottom: 0.5rem; font-size: 0.72rem; }
+/* Rationale in reveal */
+.reveal-rationale { margin-top: 0.6rem; font-size: 0.82rem; background: #eff6ff; border-left: 3px solid #3b82f6; padding: 0.4rem 0.6rem; border-radius: 0 4px 4px 0; color: #374151; font-style: italic; line-height: 1.5; }
+.rationale-label { font-weight: 700; font-style: normal; color: #1d4ed8; }
+/* Discussion prompts */
+.discussion-prompt { display: flex; align-items: flex-start; gap: 0.6rem; margin-top: 0.75rem; padding: 0.75rem 1rem; background: rgba(139,105,20,0.05); border: 1px solid rgba(139,105,20,0.2); border-radius: 8px; }
+.discussion-prompt-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.05rem; }
+.discussion-prompt-text { font-size: 0.85rem; color: #6b4f0a; line-height: 1.6; font-style: italic; }

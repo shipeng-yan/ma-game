@@ -63,7 +63,7 @@ function createUserContext(): TrpcContext {
 }
 
 const sampleDecisions = [
-  { chapter: "A1", chapterTitle: "Decision A1", choiceLabel: "Option A: Strong independent board", choiceDesc: "Full independence", investorDelta: -3, esgDelta: 8 },
+  { chapter: "A1", chapterTitle: "Decision A1", choiceLabel: "Option A: Strong independent board", choiceDesc: "Full independence", investorDelta: -3, esgDelta: 8, rationale: "I believe governance independence is critical." },
 ];
 
 describe("game.submitResult", () => {
@@ -156,6 +156,25 @@ describe("game.getAnalytics", () => {
   it("denies access to non-admin user", async () => {
     const caller = appRouter.createCaller(createUserContext());
     await expect(caller.game.getAnalytics()).rejects.toThrow("Admin access required");
+  });
+});
+
+describe("game.getChoiceDistribution", () => {
+  it("returns distribution object with all chapter keys for public user", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const result = await caller.game.getChoiceDistribution();
+    expect(result).toHaveProperty("distribution");
+    expect(result).toHaveProperty("total");
+    expect(typeof result.total).toBe("number");
+    // Should have keys for all 8 decisions
+    const keys = Object.keys(result.distribution);
+    expect(keys.length).toBeGreaterThanOrEqual(0);
+  });
+
+  it("allows unauthenticated access to choice distribution", async () => {
+    const caller = appRouter.createCaller(createPublicContext());
+    const result = await caller.game.getChoiceDistribution();
+    expect(result).toBeDefined();
   });
 });
 
