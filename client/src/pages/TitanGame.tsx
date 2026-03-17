@@ -111,8 +111,6 @@ function ConfirmationModal({ data, rationale, setRationale, onConfirm, onCancel 
   onCancel: () => void;
 }) {
   if (!data) return null;
-  const invSign = data.inv > 0 ? '+' : '';
-  const esgSign = data.esg > 0 ? '+' : '';
   return (
     <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && onCancel()}>
       <div className="modal confirm-modal">
@@ -120,11 +118,6 @@ function ConfirmationModal({ data, rationale, setRationale, onConfirm, onCancel 
           <div className="confirm-modal-tag">Confirm Your Decision</div>
           <h3>Option {data.optionId}: {data.optLabel}</h3>
           <p className="confirm-modal-desc">{data.optDesc}</p>
-        </div>
-        <div className="confirm-modal-scores">
-          <span className={`score-change ${data.inv > 0 ? 'positive' : data.inv < 0 ? 'negative' : 'zero'}`}>📊 Investor: {invSign}{data.inv}</span>
-          {' '}
-          <span className={`score-change ${data.esg > 0 ? 'positive' : data.esg < 0 ? 'negative' : 'zero'}`}>🌿 ESG: {esgSign}{data.esg}</span>
         </div>
         <div className="confirm-modal-rationale">
           <label className="form-label">Why did you make this choice? <span style={{fontWeight:400, opacity:0.6}}>(optional)</span></label>
